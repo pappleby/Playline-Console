@@ -1,4 +1,4 @@
-namespace YarnSpinnerConsole
+namespace PlaylineConsole
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace YarnSpinnerConsole
     {
         public static void ExtractStrings(FileInfo[] inputs, string format, string[] columns, FileInfo output, string defaultName = null)
         {
-            var compiledResults = YarnSpinnerConsole.CompileProgram(inputs);
+            var compiledResults = PlaylineConsole.CompileProgram(inputs);
 
             foreach (var diagnostic in compiledResults.Diagnostics)
             {

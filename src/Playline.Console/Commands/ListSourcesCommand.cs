@@ -1,4 +1,4 @@
-namespace YarnSpinnerConsole
+namespace PlaylineConsole
 {
     using System;
     using System.IO;

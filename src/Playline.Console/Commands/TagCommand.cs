@@ -1,4 +1,4 @@
-namespace YarnSpinnerConsole
+namespace PlaylineConsole
 {
     using System.Collections.Generic;
     using System.IO;

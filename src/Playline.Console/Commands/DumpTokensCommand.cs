@@ -1,4 +1,4 @@
-namespace YarnSpinnerConsole
+namespace PlaylineConsole
 {
     using System.IO;
     using System.Linq;
@@ -31,7 +31,7 @@ namespace YarnSpinnerConsole
 
                 if (json)
                 {
-                    outputText = JsonSerializer.Serialize(nodes, YarnSpinnerConsole.JsonSerializationOptions);
+                    outputText = JsonSerializer.Serialize(nodes, PlaylineConsole.JsonSerializationOptions);
                     outputFilePath = Path.ChangeExtension(outputFilePath, ".json");
                 }
                 else

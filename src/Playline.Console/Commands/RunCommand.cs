@@ -1,4 +1,4 @@
-namespace YarnSpinnerConsole
+namespace PlaylineConsole
 {
     using System;
     using System.IO;
@@ -11,7 +11,7 @@ namespace YarnSpinnerConsole
         {
             // this will be a new interactive command for running yarn
             // stories will compile and then run them
-            var results = YarnSpinnerConsole.CompileProgram(inputs);
+            var results = PlaylineConsole.CompileProgram(inputs);
 
             if (results.Diagnostics.Any(d => d.Severity == Yarn.Compiler.Diagnostic.DiagnosticSeverity.Error))
             {

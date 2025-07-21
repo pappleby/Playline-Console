@@ -1,4 +1,4 @@
-namespace YarnSpinnerConsole
+namespace PlaylineConsole
 {
     using System.IO;
     using System.Linq;
@@ -8,7 +8,7 @@ namespace YarnSpinnerConsole
     {
         public static void CompileFiles(FileInfo[] inputs, DirectoryInfo outputDirectory, string outputName, string outputStringTableName, string outputMetadataTableName, bool stdout)
         {
-            var compiledResults = YarnSpinnerConsole.CompileProgram(inputs);
+            var compiledResults = PlaylineConsole.CompileProgram(inputs);
 
             foreach (var diagnostic in compiledResults.Diagnostics)
             {

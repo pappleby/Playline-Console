@@ -1,4 +1,4 @@
-namespace YarnSpinnerConsole
+namespace PlaylineConsole
 {
     using System;
     using System.Collections.Generic;
@@ -110,7 +110,7 @@ namespace YarnSpinnerConsole
                 }
             }
 
-            return JsonSerializer.Serialize(root, YarnSpinnerConsole.JsonSerializationOptions);
+            return JsonSerializer.Serialize(root, PlaylineConsole.JsonSerializationOptions);
         }
 
         private static string FormatParseTreeAsText(Antlr4.Runtime.Tree.IParseTree tree, string indentPrefix)

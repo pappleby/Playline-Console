@@ -1,4 +1,4 @@
-﻿namespace YarnSpinnerConsole
+﻿namespace PlaylineConsole
 {
     using System;
     using System.CommandLine;
@@ -12,7 +12,7 @@
     /// <summary>
     /// Provides the entry point to the ysc command.
     /// </summary>
-    public class YarnSpinnerConsole
+    public class PlaylineConsole
     {
         public static JsonSerializerOptions JsonSerializationOptions => new JsonSerializerOptions
         {
@@ -210,7 +210,7 @@
             var versionCommand = new Command("version", "Show version info");
             versionCommand.Handler = System.CommandLine.Invocation.CommandHandler.Create(() =>
             {
-                Console.WriteLine($"ysc version " + typeof(YarnSpinnerConsole).Assembly.GetName().Version);
+                Console.WriteLine($"ysc version " + typeof(PlaylineConsole).Assembly.GetName().Version);
 
                 Console.WriteLine($"YarnSpinner.dll version " + typeof(Yarn.Dialogue).Assembly.GetName().Version);
                 Console.WriteLine($"YarnSpinner.Compiler.dll version " + typeof(Yarn.Compiler.Compiler).Assembly.GetName().Version);

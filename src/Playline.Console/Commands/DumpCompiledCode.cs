@@ -1,4 +1,4 @@
-namespace YarnSpinnerConsole
+namespace PlaylineConsole
 {
     using System;
     using System.IO;
@@ -15,7 +15,7 @@ namespace YarnSpinnerConsole
                 throw new ArgumentNullException(nameof(inputs));
             }
 
-            var compiledResults = YarnSpinnerConsole.CompileProgram(inputs);
+            var compiledResults = PlaylineConsole.CompileProgram(inputs);
 
             System.Func<string, string> stringLookupHelper = (input) =>
             {
