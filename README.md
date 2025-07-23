@@ -1,10 +1,10 @@
-# Yarn Spinner Console
+# Playline Console
 
-**`ysc`** is the command-line tool for working with [Yarn Spinner](https://github.com/YarnSpinnerTool/YarnSpinner) programs.
+**`plc`** is the command-line tool for working with [Playline](https://github.com/pappleby/playline) programs.
 
-## Installing `ysc`
+## Installing `plc`
 
-You can install `ysc` by downloading the [most recent release](https://github.com/YarnSpinnerTool/YarnSpinner-Console/releases/latest), or by building it locally.
+You can install `plc` by downloading the [most recent release](https://github.com/pappleby/Playline-Console/releases/latest), or by building it locally.
 
 <details>
 <summary>Building it locally</summary>
@@ -20,7 +20,7 @@ You can install `ysc` by downloading the [most recent release](https://github.co
     For example, to compile a Yarn script, run the following command:
 
     ```bash
-    dotnet-run -- compile path/to/MyScript.yarn
+    dotnet-run -- compile path/to/Mplcript.yarn
     ```
 
 </p>
@@ -29,10 +29,10 @@ You can install `ysc` by downloading the [most recent release](https://github.co
 ## Running Scripts
 
 ```bash
-$ ysc run [--auto-advance] [--start-node <Start>] <input1.yarn> <input2.yarn> ...
+$ plc run [--auto-advance] [--start-node <Start>] <input1.yarn> <input2.yarn> ...
 ```
 
-`ysc` will compile all of the `.yarn` files provided and then begin running them from the `Start` node.
+`plc` will compile all of the `.yarn` files provided and then begin running them from the `Start` node.
 By specifiying the `--start-node` option you can configure which node is used as the entry point for the story, defaulting to `Start` if not set.
 
 If you specify the `--auto-advance` flag, the normal lines of dialogue will be presented automatically, only holding the program up when an option or shortcut is reached.
@@ -43,10 +43,10 @@ This flag is not set by default meaning each line of dialogue will halt the stor
 ## Compiling Scripts
 
 ```bash
-$ ysc compile [--output-directory <output>] [--output-name <name>] [--output-string-table-name <tablename>] [--output-metadata-table-name <metadataname>] <input1.yarn> <input2.yarn> ...
+$ plc compile [--output-directory <output>] [--output-name <name>] [--output-string-table-name <tablename>] [--output-metadata-table-name <metadataname>] <input1.yarn> <input2.yarn> ...
 ```
 
-`ysc` will compile all of the `.yarn` files you provide, and generates three files: `input.yarnc` compiled program, `input-Lines.csv` strings table, and `input-Metadata.csv` table of line metadata.
+`plc` will compile all of the `.yarn` files you provide, and generates one file: `input.yarnc.lua` which includes the compiled program, strings and line metadata.
 
 By default the name of the yarn file will be used to name the compiled output.
 If more than one Yarn file is included then you can set a name using the `--output-name` option, this name will then be used as the base name for the files.
@@ -57,7 +57,7 @@ If further customisation `--output-string-table-name` and `--output-metadata-tab
 ## Listing Sources
 
 ```bash
-$ ysc list-sources <input.yarnproject>
+$ plc list-sources <input.yarnproject>
 ```
 
 Lists all of the yarn files that are associated with the `input.yarnproject` Yarn Project.
@@ -67,7 +67,7 @@ You can use this to make sure you have set your globstar values correctly.
 ## Printing the Syntax Tree
 
 ```bash
-$ ysc print-tree [--output-directory <output>] [--json] <input1.yarn> <input2.yarn> ...
+$ plc print-tree [--output-directory <output>] [--json] <input1.yarn> <input2.yarn> ...
 ```
 
 Prints a human readable form of the dialogue syntax tree of the input Yarn files.
@@ -77,7 +77,7 @@ Defaults to returning the syntax tree as a text file, by specifiying the `--json
 ## Printing the Parser Tokens
 
 ```bash
-$ ysc print-tokens [--output-directory <output>] [--json] <input1.yarn> <input2.yarn> ...
+$ plc print-tokens [--output-directory <output>] [--json] <input1.yarn> <input2.yarn> ...
 ```
 
 Prints a list of all parser tokens from the included Yarn files.
@@ -88,7 +88,7 @@ Defaults to returning the syntax tree as a text file, by specifiying the `--json
 ## Tagging lines for localisation
 
 ```bash
-$ ysc tag [--output-directory <output>] <input1.yarn> <input2.yarn> ...
+$ plc tag [--output-directory <output>] <input1.yarn> <input2.yarn> ...
 ```
 
 Tags the input Yarn files with line ID hashtag for localisation.
@@ -98,7 +98,7 @@ If `--output-directory` is not set will default to overriding the files in place
 ## Extracting lines for recording
 
 ```bash
-$ ysc extract <input1.yarn> <input2.yarn> ... [--format csv|xlsx] [--columns <column1> <column2> ...] [--default-name <name>] [--output <file>]
+$ plc extract <input1.yarn> <input2.yarn> ... [--format csv|xlsx] [--columns <column1> <column2> ...] [--default-name <name>] [--output <file>]
 ```
 
 Creates a tables of all lines in the included Yarn files in a format intended for easier recording.
@@ -124,7 +124,7 @@ Defaults to `lines` in the current directory if not set.
 ## Generating a node graph
 
 ```bash
-$ ysc graph <input1.yarn> <input2.yarn> ... [--clustering] [--format dot|mermaid] [--output <file>]
+$ plc graph <input1.yarn> <input2.yarn> ... [--clustering] [--format dot|mermaid] [--output <file>]
 ```
 
 Creates a graph in the [DOT](https://graphviz.org/doc/info/lang.html) or [mermaid](https://mermaid-js.github.io/mermaid/) graph description language of all nodes and their links in the Yarn files.
@@ -147,7 +147,7 @@ Note that this generates the graph file itself, to preview it you will need a to
 ## Browsing Compiled Binary
 
 ```bash
-$ ysc browse-binary <input.yarnproject>
+$ plc browse-binary <input.yarnproject>
 ```
 
 Presents common information inside of the compiled `input.yarnproject`.
@@ -156,15 +156,15 @@ Displays all nodes and their headers, and all variables declarations and their d
 ## Creating Yarn Project
 
 ```bash
-$ ysc create-proj [--unity-exclusion] <project-name> 
+$ plc create-proj [--playline-exclusion] <project-name> 
 ```
 
 Creates a new default Yarn Project named `project-name`.
-Defaults to setting no exclusions, if the project is intended to be used in Unity setting the `--unity-exclusion` flag will exclude folders with a trailing ~ which is what Unity expects.
+Defaults to setting no exclusions, if the project is intended to be used in a Playdate setting the `--playline-exclusion` flag will exclude the build folder.
 
 ## License
 
-`ysc` is available under the [MIT License](LICENSE.md).
+`plc` is available under the [MIT License](LICENSE.md).
 
 ## Contributing
 
