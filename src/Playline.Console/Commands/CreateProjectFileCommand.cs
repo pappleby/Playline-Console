@@ -5,13 +5,13 @@ namespace PlaylineConsole
 
     public static class CreateProjectFileCommand
     {
-        public static void CreateProjFile(string projectName, bool unityExclusion)
+        public static void CreateProjFile(string projectName, bool playlineExclusion)
         {
             Project proj = new Project();
 
-            if (unityExclusion)
+            if (playlineExclusion)
             {
-                proj.ExcludeFilePatterns = new[] { "**/*~/*" };
+                proj.ExcludeFilePatterns = new[] { "**/builds/*" };
             }
 
             var path = $"./{projectName}.yarnproject";

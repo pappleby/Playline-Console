@@ -1,7 +1,11 @@
 namespace PlaylineConsole
 {
+    using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using Luaon.Json;
+    using Newtonsoft.Json;
     using Yarn.Compiler;
 
     public static class CompileCommand
@@ -40,78 +44,45 @@ namespace PlaylineConsole
             {
                 outputStringTableName = $"{outputName}-Lines.csv";
             }
-            if (string.IsNullOrEmpty(outputMetadataTableName))
-            {
-                outputMetadataTableName = $"{outputName}-Metadata.csv";
-            }
 
-            var programOutputPath = Path.Combine(outputDirectory.FullName, $"{outputName}.yarnc");
+            var programOutputPath = Path.Combine(outputDirectory.FullName, $"{outputName}.yarnc.lua");
             var stringTableOutputPath = Path.Combine(outputDirectory.FullName, outputStringTableName);
-            var stringMetadatOutputPath = Path.Combine(outputDirectory.FullName, outputMetadataTableName);
 
+            var serializer = new JsonSerializer();
+            serializer.NullValueHandling = NullValueHandling.Ignore;
+            serializer.Converters.Add(new PlaylineCustomConverter());
             using (var outStream = new FileStream(programOutputPath, FileMode.Create))
-            using (var codedStream = new Google.Protobuf.CodedOutputStream(outStream))
+            using (var sw = new System.IO.StreamWriter(outStream))
             {
-                compiledResults.Program.WriteTo(codedStream);
+                sw.WriteLine("Playline = Playline or {}");
+                sw.WriteLine("Playline.Compiled = Playline.Compiled or {}");
+                sw.Write($"Playline.Compiled.{outputName} = ");
+                using (var jlw = new JsonLuaWriter(sw)
+                {
+                    AutoCompleteOnClose = true,
+                    Formatting = Formatting.Indented,
+                })
+                {
+                    var lines = compiledResults.StringTable.ToDictionary(kv => kv.Key, kv =>
+                    {
+                        var stringInfo = kv.Value;
+                        var tags = new Dictionary<string, string>();
+                        foreach (var tag in stringInfo.metadata)
+                        {
+                            var tagSplits = tag.ToString().Split(':', 2, StringSplitOptions.TrimEntries);
+                            tags.Add(tagSplits[0], tagSplits.Length > 1 ? tagSplits[1] : string.Empty);
+                        }
+                        if (tags.Count == 0)
+                        {
+                            tags = null;
+                        }
+                        return new { Text = stringInfo.text, Node = kv.Value.nodeName, Tags = tags, LineNumber = stringInfo.lineNumber };
+                    });
+                    serializer.Serialize(jlw, new { Program = compiledResults.Program, Lines = lines });
+                }
             }
 
             Log.Info($"Wrote {programOutputPath}");
-
-            using (var writer = new StreamWriter(stringTableOutputPath))
-            {
-                // Use the invariant culture when writing the CSV
-                var configuration = new CsvHelper.Configuration.Configuration(
-                    System.Globalization.CultureInfo.InvariantCulture);
-
-                var csv = new CsvHelper.CsvWriter(
-                    writer, // write into this stream
-                    configuration); // use this configuration
-
-                var lines = compiledResults.StringTable.Select(x => new
-                {
-                    id = x.Key,
-                    text = x.Value.text,
-                    file = x.Value.fileName,
-                    node = x.Value.nodeName,
-                    lineNumber = x.Value.lineNumber,
-                });
-
-                csv.WriteRecords(lines);
-            }
-
-            Log.Info($"Wrote {stringTableOutputPath}");
-
-            using (var writer = new StreamWriter(stringMetadatOutputPath))
-            {
-                // Use the invariant culture when writing the CSV
-                var configuration = new CsvHelper.Configuration.Configuration(System.Globalization.CultureInfo.InvariantCulture);
-
-                // not really using csvhelper correctly here but its fine for now until it all works
-                var csv = new CsvHelper.CsvWriter(writer, configuration);
-                csv.WriteField("id");
-                csv.WriteField("node");
-                csv.WriteField("lineNumber");
-                csv.WriteField("tags");
-                csv.NextRecord();
-                foreach (var pair in compiledResults.StringTable)
-                {
-                    // filter out line: metadata
-                    var metadata = pair.Value.metadata.Where(metadata => !metadata.StartsWith("line:")).ToList();
-                    if (metadata.Count == 0)
-                    {
-                        continue;
-                    }
-
-                    csv.WriteField(pair.Key);
-                    csv.WriteField(pair.Value.nodeName);
-                    csv.WriteField(pair.Value.lineNumber);
-                    csv.WriteField(string.Join(" ", pair.Value.metadata));
-
-                    csv.NextRecord();
-                }
-
-                Log.Info($"Wrote {stringMetadatOutputPath}");
-            }
         }
 
         public static CompilationJob GetCompilationJob(FileInfo[] inputs, int languageVersion = Yarn.Compiler.Project.CurrentProjectFileVersion)

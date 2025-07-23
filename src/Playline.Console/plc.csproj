@@ -9,24 +9,27 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <PackageId>Playline.Console</PackageId>
     <PackAsTool>true</PackAsTool>
-    <ToolCommandName>ysc</ToolCommandName>
+    <ToolCommandName>plc</ToolCommandName>
     <PackageOutputPath>../../nupkg</PackageOutputPath>
     <!-- <YarnSpinnerDevelopmentPath>../../../YarnSpinner</YarnSpinnerDevelopmentPath> -->
 
-    <Authors>Secret Lab Pty. Ltd. and Yarn Spinner contributors</Authors>
+    <Authors>Peter Appleby, Secret Lab Pty. Ltd. and Yarn Spinner contributors</Authors>
     <PackageDescription><![CDATA[Yarn Spinner is a tool for creating interactive dialogue for games. 
       
 Write your conversations in Yarn, a simple programming language that's designed to be easy for writers to learn, while also powerful enough to handle whatever you need.
 
 This package provides the command-line tool 'ysc', which can compile and work with Yarn Spinner scripts.]]></PackageDescription>
 
-    <Company>Secret Lab Pty. Ltd.</Company>
+    <Company>Peter Appleby</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/YarnSpinnerTool/YarnSpinner-Console</RepositoryUrl>
+    <RepositoryUrl>https://github.com/pappleby/Playline-Console</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Title>Playline-Console</Title>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="ClosedXML" Version="0.95.4" />
+    <PackageReference Include="CXuesong.Luaon" Version="0.2.7" />
     <PackageReference Include="CXuesong.Luaon.Json" Version="0.2.1" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20253.1" />
     <PackageReference Include="CsvHelper" Version="12.2.2" />

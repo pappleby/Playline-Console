@@ -10,7 +10,7 @@
     using Yarn.Compiler;
 
     /// <summary>
-    /// Provides the entry point to the ysc command.
+    /// Provides the entry point to the plc command.
     /// </summary>
     public class PlaylineConsole
     {
@@ -18,7 +18,7 @@
         {
             WriteIndented = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            IgnoreNullValues = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             Converters =
             {
                 new JsonStringEnumConverter(JsonNamingPolicy.CamelCase),
@@ -32,7 +32,7 @@
         /// <returns>The return code for the application.</returns>
         public static int Main(string[] args)
         {
-            var compileCommand = new System.CommandLine.Command("compile", "Compiles Yarn scripts.");
+            var compileCommand = new System.CommandLine.Command("compile", "Compiles Yarn scripts to lua tables");
             {
                 Argument<FileInfo[]> inputsArgument = new Argument<FileInfo[]>("inputs", "The .yarnproject file to compile, or a collection of .yarn files to compile.");
                 inputsArgument.Arity = ArgumentArity.OneOrMore;
@@ -52,16 +52,13 @@
                 outputStringTableOption.AddAlias("--output-string-table-name");
                 compileCommand.AddOption(outputStringTableOption);
 
-                var outputMetadataTableOption = new Option<string>("-m", "Output metadata table filename (default: {name}-Metadata.csv");
-                outputMetadataTableOption.AddAlias("--output-metadata-table-name");
-                compileCommand.AddOption(outputMetadataTableOption);
-
-                var stdoutOption = new Option<bool>("--stdout", "Output machine-readable compilation result to stdout instead of to files");
-                compileCommand.AddOption(stdoutOption);
+                // var outputMetadataTableOption = new Option<string>("-m", "Output metadata table filename (default: {name}-Metadata.csv");
+                // outputMetadataTableOption.AddAlias("--output-metadata-table-name");
+                // compileCommand.AddOption(outputMetadataTableOption);
 
                 var allowPreviewFeaturesOption = new Option<bool>("-p", "Allow using in-development compiler features.");
                 allowPreviewFeaturesOption.AddAlias("--allow-preview-features");
-                allowPreviewFeaturesOption.Argument.SetDefaultValue(false);
+                allowPreviewFeaturesOption.Argument.SetDefaultValue(true);
                 compileCommand.AddOption(allowPreviewFeaturesOption);
             }
 
@@ -210,7 +207,7 @@
             var versionCommand = new Command("version", "Show version info");
             versionCommand.Handler = System.CommandLine.Invocation.CommandHandler.Create(() =>
             {
-                Console.WriteLine($"ysc version " + typeof(PlaylineConsole).Assembly.GetName().Version);
+                Console.WriteLine($"plc version " + typeof(PlaylineConsole).Assembly.GetName().Version);
 
                 Console.WriteLine($"YarnSpinner.dll version " + typeof(Yarn.Dialogue).Assembly.GetName().Version);
                 Console.WriteLine($"YarnSpinner.Compiler.dll version " + typeof(Yarn.Compiler.Compiler).Assembly.GetName().Version);

@@ -27,7 +27,7 @@ namespace PlaylineConsole
                     {
                         continue;
                     }
-                    
+
                     Log.PrintLine($"\t- {header.Key}: \"{header.Value}\"");
                 }
             }
