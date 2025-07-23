@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "plc": {
-      "commandName": "Project",
-      "commandLineArgs": "compile ./yarn/Project.yarnproject",
-      "workingDirectory": "C:\\Users\\Peter Appleby\\PlaylineDemo\\playlinedemo\\source"
-    }
-  }
-}
