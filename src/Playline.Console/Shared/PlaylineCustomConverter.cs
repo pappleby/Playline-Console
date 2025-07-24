@@ -21,6 +21,10 @@
                     default: writer.WriteNull(); break;
                 }
             }
+            else if (value is Yarn.Instruction.InstructionTypeOneofCase oo)
+            {
+                writer.WriteValue(oo.ToString());
+            }
             else if (value == null)
             {
                 writer.WriteNull();
@@ -40,7 +44,7 @@
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType.FullName == "Yarn.Operand";
+            return objectType.FullName == "Yarn.Operand" || objectType.FullName == "Yarn.Instruction+InstructionTypeOneofCase";
         }
     }
 }
