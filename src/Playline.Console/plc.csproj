@@ -26,14 +26,6 @@ This package provides the command-line tool 'plc', which can compile Yarn Spinne
     <RepositoryType>git</RepositoryType>
     <Title>Playline-Console</Title>
   </PropertyGroup>
-  
-  <!-- PackAsTool is true by default for dotnet pack, false for dotnet build -->
-  <PropertyGroup Condition="'$(GeneratePackageOnBuild)' == 'true' Or '$(MSBuildTargets)' == 'Pack'">
-    <PackAsTool>true</PackAsTool>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(GeneratePackageOnBuild)' != 'true' And '$(MSBuildTargets)' != 'Pack'">
-    <PackAsTool>false</PackAsTool>
-  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.4" />

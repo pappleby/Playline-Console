@@ -34,7 +34,7 @@ jobs:
         run: dotnet build --no-restore --configuration Release
 
       - name: Package nuget
-        run: dotnet pack -p:PackageVersion=${{ steps.version.outputs.SemVer }}
+        run: dotnet pack -p:PackageVersion=${{ steps.version.outputs.SemVer }} -p:PackAsTool=true
 
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal
