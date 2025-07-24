@@ -6,6 +6,8 @@
 
 You can install `plc` by downloading the [most recent release](https://github.com/pappleby/Playline-Console/releases/latest), or by building it locally.
 
+Soon you'll be able to also install as a dotnet cli tool (via nuget).
+
 <details>
 <summary>Building it locally</summary>
 <p>
