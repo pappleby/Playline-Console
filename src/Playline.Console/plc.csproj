@@ -23,6 +23,7 @@ This package provides the command-line tool 'plc', which can compile Yarn Spinne
     <RepositoryUrl>https://github.com/pappleby/Playline-Console</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Title>Playline-Console</Title>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
