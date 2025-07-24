@@ -11,6 +11,8 @@
     <PackageId>Playline.Console</PackageId>
     <ToolCommandName>plc</ToolCommandName>
     <PackageOutputPath>../../nupkg</PackageOutputPath>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
     <!-- <YarnSpinnerDevelopmentPath>../../../YarnSpinner</YarnSpinnerDevelopmentPath> -->
 
     <Authors>Peter Appleby, Secret Lab Pty. Ltd. and Yarn Spinner contributors</Authors>
@@ -24,10 +26,12 @@ This package provides the command-line tool 'plc', which can compile Yarn Spinne
     <RepositoryType>git</RepositoryType>
     <Title>Playline-Console</Title>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'NuGetTool'">
+  
+  <!-- PackAsTool is true by default for dotnet pack, false for dotnet build -->
+  <PropertyGroup Condition="'$(GeneratePackageOnBuild)' == 'true' Or '$(MSBuildTargets)' == 'Pack'">
     <PackAsTool>true</PackAsTool>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug' Or '$(Configuration)' == 'Release'">
+  <PropertyGroup Condition="'$(GeneratePackageOnBuild)' != 'true' And '$(MSBuildTargets)' != 'Pack'">
     <PackAsTool>false</PackAsTool>
   </PropertyGroup>
 
@@ -41,6 +45,7 @@ This package provides the command-line tool 'plc', which can compile Yarn Spinne
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <!-- If Yarn Spinner doesn't exist at YarnSpinnerDevelopmentPath, then pull
