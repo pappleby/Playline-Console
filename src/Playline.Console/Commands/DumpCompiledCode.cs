@@ -2,9 +2,6 @@ namespace PlaylineConsole
 {
     using System;
     using System.IO;
-    using System.Linq;
-    using System.Text.Json;
-    using Yarn.Compiler;
 
     public static class DumpCompiledCodeCommand
     {
