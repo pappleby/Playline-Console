@@ -20,7 +20,7 @@ You can install `plc` by downloading the [most recent release](https://github.co
     For example, to compile a Yarn script, run the following command:
 
     ```bash
-    dotnet-run -- compile path/to/Mplcript.yarn
+    dotnet-run -- compile path/to/Myscript.yarn
     ```
 
 </p>
