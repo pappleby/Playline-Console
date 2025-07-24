@@ -1,4 +1,4 @@
-name: Build Yarn Spinner
+name: Build Playline Console
 
 on:
   push:
@@ -43,12 +43,12 @@ jobs:
         name: Upload Windows build
         with:
           name: plc-win
-          path: src/YarnSpinner.Console/bin/Release/netcoreapp6.0/win-x64/publish/plc.exe
+          path: src/Playline.Console/bin/Release/netcoreapp6.0/win-x64/publish/plc.exe
 
       - name: Package for macOS
         run: |
           dotnet publish -r osx-x64 -c Release --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=True
-          tar -cvf plc-osx.tar --directory=src/YarnSpinner.Console/bin/Release/netcoreapp6.0/osx-x64/publish/ .
+          tar -cvf plc-osx.tar --directory=src/Playline.Console/bin/Release/netcoreapp6.0/osx-x64/publish/ .
 
       - uses: actions/upload-artifact@v4
         name: Upload macOS build
