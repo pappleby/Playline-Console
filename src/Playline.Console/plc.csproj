@@ -14,11 +14,9 @@
     <!-- <YarnSpinnerDevelopmentPath>../../../YarnSpinner</YarnSpinnerDevelopmentPath> -->
 
     <Authors>Peter Appleby, Secret Lab Pty. Ltd. and Yarn Spinner contributors</Authors>
-    <PackageDescription><![CDATA[Yarn Spinner is a tool for creating interactive dialogue for games. 
-      
-Write your conversations in Yarn, a simple programming language that's designed to be easy for writers to learn, while also powerful enough to handle whatever you need.
+    <PackageDescription><![CDATA[Playline is a port of Yarn Spinner (a tool for creating interactive dialogue for games) to the Playdate.  
 
-This package provides the command-line tool 'ysc', which can compile and work with Yarn Spinner scripts.]]></PackageDescription>
+This package provides the command-line tool 'plc', which can compile Yarn Spinner scripts into lua tables.]]></PackageDescription>
 
     <Company>Peter Appleby</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
