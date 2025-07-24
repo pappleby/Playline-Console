@@ -43,6 +43,12 @@ jobs:
         run: dotnet publish -r win-x64 -c Release --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=True
 
       - uses: actions/upload-artifact@v4
+        name: Upload nuget package
+        with:
+          name: nuget-package
+          path: nupkg/Playline.Console.nupkg
+
+      - uses: actions/upload-artifact@v4
         name: Upload Windows build
         with:
           name: plc-win
@@ -91,7 +97,17 @@ jobs:
       - name: Package Windows build
         run: |
           zip --junk-paths plc-win.zip plc-win/plc.exe
-
+      
+      - name: Upload nuget package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./nuget-package/Playline.Console.nupkg
+          asset_name: Playline.Console.${{ needs.build.outputs.builtVersion }}.nupkg
+          asset_content_type: application/nupkg
+          
       - name: Upload Windows Build
         uses: actions/upload-release-asset@v1
         env:
