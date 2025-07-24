@@ -56,6 +56,7 @@ jobs:
 
     outputs:
       builtVersion: ${{ steps.version.outputs.SemVer }}-${{ steps.version.outputs.ShortSha }}
+      semVer: ${{ steps.version.outputs.SemVer }}
 
   release:
     needs: build
@@ -96,29 +97,6 @@ jobs:
             ${{ steps.release_preface.outputs.result }}
             ${{ steps.extract-release-notes.outputs.release_notes }}
 
-      - name: Find and prepare nuget package
-        run: |
-          # Debug: show what we have
-          echo "Current directory structure:"
-          find . -name "*.nupkg" -type f
-          echo "nuget-package directory contents:"
-          ls -la nuget-package/ || echo "nuget-package directory doesn't exist"
-          
-          # Find the .nupkg file and copy it to the expected location
-          mkdir -p nuget-package
-          # Use the same version that was used to create the package
-          found_file=$(find . -name "Playline.Console.${{ steps.version.outputs.SemVer }}.nupkg" -type f | head -1)
-          if [ -n "$found_file" ]; then
-            echo "Found file: $found_file"
-            cp "$found_file" "./nuget-package/"
-          else
-            echo "ERROR: Could not find Playline.Console.${{ steps.version.outputs.SemVer }}.nupkg"
-            exit 1
-          fi
-          
-          echo "Final nuget-package directory contents:"
-          ls -la nuget-package/
-      
       - name: Package Windows build
         run: |
           zip --junk-paths plc-win.zip plc-win/plc.exe
@@ -129,8 +107,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./nuget-package/Playline.Console.${{ steps.version.outputs.SemVer }}.nupkg
-          asset_name: Playline.Console.${{ steps.version.outputs.SemVer }}.nupkg
+          asset_path: ./nuget-package/Playline.Console.${{ needs.build.outputs.semVer }}.nupkg
+          asset_name: Playline.Console.${{ needs.build.outputs.semVer }}.nupkg
           asset_content_type: application/nupkg
           
       - name: Upload Windows Build
