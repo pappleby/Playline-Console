@@ -7,8 +7,8 @@
     <UseAppHost>true</UseAppHost>
     <PublishSelfContained>true</PublishSelfContained>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <IsPackable>true</IsPackable>
     <PackageId>Playline.Console</PackageId>
-    <PackAsTool>true</PackAsTool>
     <ToolCommandName>plc</ToolCommandName>
     <PackageOutputPath>../../nupkg</PackageOutputPath>
     <!-- <YarnSpinnerDevelopmentPath>../../../YarnSpinner</YarnSpinnerDevelopmentPath> -->
@@ -23,7 +23,12 @@ This package provides the command-line tool 'plc', which can compile Yarn Spinne
     <RepositoryUrl>https://github.com/pappleby/Playline-Console</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Title>Playline-Console</Title>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'NuGetTool'">
+    <PackAsTool>true</PackAsTool>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug' Or '$(Configuration)' == 'Release'">
+    <PackAsTool>false</PackAsTool>
   </PropertyGroup>
 
   <ItemGroup>

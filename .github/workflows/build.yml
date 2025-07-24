@@ -33,6 +33,9 @@ jobs:
       - name: Build
         run: dotnet build --no-restore --configuration Release
 
+      - name: Package nuget
+        run: dotnet pack -p:PackageVersion=${{ steps.version.outputs.SemVer }}
+
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal
 
@@ -44,17 +47,6 @@ jobs:
         with:
           name: plc-win
           path: src/Playline.Console/bin/Release/netcoreapp6.0/win-x64/publish/plc.exe
-
-      - name: Package for macOS
-        run: |
-          dotnet publish -r osx-x64 -c Release --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=True
-          tar -cvf plc-osx.tar --directory=src/Playline.Console/bin/Release/netcoreapp6.0/osx-x64/publish/ .
-
-      - uses: actions/upload-artifact@v4
-        name: Upload macOS build
-        with:
-          name: plc-osx
-          path: plc-osx.tar
 
     outputs:
       builtVersion: ${{ steps.version.outputs.SemVer }}-${{ steps.version.outputs.ShortSha }}
@@ -109,17 +101,3 @@ jobs:
           asset_path: ./plc-win.zip
           asset_name: plc-win-${{ needs.build.outputs.builtVersion }}.zip
           asset_content_type: application/zip
-
-      - name: Package macOS build
-        run: |
-          gzip plc-osx/plc-osx.tar
-
-      - name: Upload macOS Build
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./plc-osx/plc-osx.tar.gz
-          asset_name: plc-osx-${{ needs.build.outputs.builtVersion }}.tar.gz
-          asset_content_type: application/gzip
