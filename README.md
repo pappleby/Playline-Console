@@ -14,7 +14,8 @@ Follow the instructions on the [nuget package page](https://www.nuget.org/packag
 
 If using the [playline demo project](https://github.com/pappleby/playlinedemo) this is already configured and setup to run on build (just need to `dotnet tool restore` in the root of the repo) 
 </p>
-    
+    </details>
+    <details>
 <summary>Building it locally</summary>
 <p>
 
