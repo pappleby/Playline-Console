@@ -4,11 +4,17 @@
 
 ## Installing `plc`
 
-You can install `plc` by downloading the [most recent release](https://github.com/pappleby/Playline-Console/releases/latest), or by building it locally.
-
-Soon you'll be able to also install as a dotnet cli tool (via nuget).
+You can install `plc` by using `dotnet tool`, downloading the [most recent release](https://github.com/pappleby/Playline-Console/releases/latest), or by building it locally.
 
 <details>
+
+<summary>dotnet tool</summary>
+<p>
+Follow the instructions on the [nuget package page](https://www.nuget.org/packages/Playline.Console/) (I recommend the .NET CLI (Local) instructions rather than installing globally) 
+
+If using the [playline demo project](https://github.com/pappleby/playlinedemo) this is already configured and setup to run on build (just need to `dotnet tool restore` in the root of the repo) 
+</p>
+    
 <summary>Building it locally</summary>
 <p>
 
